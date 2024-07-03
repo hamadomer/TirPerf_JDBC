@@ -15,11 +15,11 @@ public class ApplicatifRepositoryTest {
     private Applicatif applicatif;
 
     @BeforeEach
-    public void setup() throws SQLException {
+    public void setup() throws Exception {
         repository = ApplicatifRepository.getInstance();
         applicatif = new Applicatif("Test Applicatif", "1.0", "Function 1");
-        int generatedId = repository.createApplicatif(applicatif);
-        applicatif.setId(generatedId);
+        Optional<Integer> generatedId = repository.createApplicatif(applicatif);
+        applicatif.setId(generatedId.orElseThrow(()->new Exception("Can't create Applicatif")));
     }
 
     @AfterEach

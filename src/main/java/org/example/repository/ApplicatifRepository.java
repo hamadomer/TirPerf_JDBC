@@ -28,7 +28,7 @@ public class ApplicatifRepository {
         }
     }
 
-    public int createApplicatif(Applicatif applicatif) throws SQLException {
+    public Optional<Integer> createApplicatif(Applicatif applicatif) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_APPLICATIF, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, applicatif.getIntitule());
             statement.setString(2, applicatif.getVersion());
@@ -37,13 +37,11 @@ public class ApplicatifRepository {
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
+                    return Optional.of(generatedKeys.getInt(1));
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return -1;
+        return Optional.empty();
     }
 
     public Optional<Applicatif> findApplicatifById(Integer id) {
