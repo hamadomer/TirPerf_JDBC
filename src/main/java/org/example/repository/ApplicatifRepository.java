@@ -24,7 +24,7 @@ public class ApplicatifRepository {
         try {
             connection = DbConnector.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
