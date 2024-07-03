@@ -20,6 +20,12 @@ public class Scenario {
         this.scenario_fonctions = scenario_fonctions;
     }
 
+    public Scenario (String description, Integer applicatif_id, String scenario_fonctions) {
+        this.description = description;
+        this.applicatif_id = applicatif_id;
+        this.scenario_fonctions = scenario_fonctions;
+    }
+
     public Scenario () {}
 
 

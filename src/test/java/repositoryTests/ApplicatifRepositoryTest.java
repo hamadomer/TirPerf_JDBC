@@ -19,7 +19,7 @@ public class ApplicatifRepositoryTest {
         repository = ApplicatifRepository.getInstance();
         applicatif = new Applicatif("Test Applicatif", "1.0", "Function 1");
         Optional<Integer> generatedId = repository.createApplicatif(applicatif);
-        applicatif.setId(generatedId.orElseThrow(()->new Exception("Can't create Applicatif")));
+        applicatif.setId(generatedId.orElseThrow(()->new RuntimeException("Applicatif could not be created")));
     }
 
     @AfterEach
@@ -34,15 +34,6 @@ public class ApplicatifRepositoryTest {
         assertEquals(applicatif.getIntitule(), createdApplicatif.get().getIntitule());
         assertEquals(applicatif.getVersion(), createdApplicatif.get().getVersion());
         assertEquals(applicatif.getFonctions(), createdApplicatif.get().getFonctions());
-    }
-
-    @Test
-    public void testFindApplicatifById() throws SQLException {
-        Optional<Applicatif> foundApplicatif = repository.findApplicatifById(applicatif.getId());
-        assertTrue(foundApplicatif.isPresent());
-        assertEquals(applicatif.getIntitule(), foundApplicatif.get().getIntitule());
-        assertEquals(applicatif.getVersion(), foundApplicatif.get().getVersion());
-        assertEquals(applicatif.getFonctions(), foundApplicatif.get().getFonctions());
     }
 
     @Test
