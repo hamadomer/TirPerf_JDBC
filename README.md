@@ -23,3 +23,5 @@ chmod +x create_db.sh
 ./create_db.sh
 ```
 
+After this you can run the `DbConnectorTest`  to test the connection to Postgres.
+you can find the test on this path `src/test/java/DbTests/DbConnectorTest.java`, if every thing is green you can proceed to the rest of the tests .
