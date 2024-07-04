@@ -33,8 +33,7 @@ public class ScenarioRepository {
             statement.setInt(2, scenario.getApplicatif_id());
             statement.setString(3, scenario.getScenario_fonctions());
 
-            HeplersFunctions generateId = new HeplersFunctions();
-            return generateId.getGeneratedKeys(statement);
+            return HeplersFunctions.getGeneratedKeys(statement);
         }
     }
 

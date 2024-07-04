@@ -36,8 +36,7 @@ public class ApplicatifRepository {
             statement.setString(3, applicatif.getFonctions());
             statement.executeUpdate();
 
-            HeplersFunctions generateId = new HeplersFunctions();
-            return generateId.getGeneratedKeys(statement);
+            return HeplersFunctions.getGeneratedKeys(statement);
         }
     }
 

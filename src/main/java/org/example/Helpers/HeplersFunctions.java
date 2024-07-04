@@ -9,7 +9,7 @@ public class HeplersFunctions {
 
     public HeplersFunctions() {}
 
-    public Optional<Integer> getGeneratedKeys(PreparedStatement statement) throws SQLException {
+    public static Optional<Integer> getGeneratedKeys(PreparedStatement statement) throws SQLException {
         statement.executeUpdate();
         try (
                 ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -17,6 +17,9 @@ public class HeplersFunctions {
                 return Optional.of(generatedKeys.getInt(1));
             }
         }
+        return Optional.empty();
+    }
+    public static Optional<Integer> test(){
         return Optional.empty();
     }
 }

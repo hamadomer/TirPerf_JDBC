@@ -9,6 +9,10 @@ public class PanSI {
         this.version = version;
     }
 
+    public PanSI(String version) {
+        this.version = version;
+    }
+
     public PanSI() {}
 
     public Integer getId() {

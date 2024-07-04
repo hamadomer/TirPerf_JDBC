@@ -31,8 +31,7 @@ public class TirPerfRepository {
             statement.setDate(1, tirPerf.getDate());
             statement.setInt(2, tirPerf.getScenarioId());
 
-            HeplersFunctions generateId = new HeplersFunctions();
-            return generateId.getGeneratedKeys(statement);
+            return HeplersFunctions.getGeneratedKeys(statement);
         }
     }
 
@@ -51,9 +50,6 @@ public class TirPerfRepository {
                     return Optional.empty();
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return Optional.empty();
         }
     }
 }

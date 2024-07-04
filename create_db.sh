@@ -38,6 +38,14 @@ CREATE TABLE IF NOT EXISTS tirperf (
     scenario_id SMALLINT
     );"
 
+# Create the tirPerf table
+
+psql -U $DB_USER -h $DB_HOST -p $DB_PORT -d $DB_NAME -c "
+CREATE TABLE IF NOT EXISTS pansi (
+    id SERIAL PRIMARY KEY,
+    version VARCHAR(255)
+    );"
+
 unset PGPASSWORD
 
 echo "Database '$DB_NAME' created successfully."
