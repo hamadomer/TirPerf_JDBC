@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
+import org.example.Helpers.GenerateId;
 import org.example.model.TirPerf;
 
 import java.sql.*;
@@ -29,15 +30,10 @@ public class TirPerfRepository {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_TirPerf, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, tirPerf.getDate());
             statement.setInt(2, tirPerf.getScenarioId());
-            statement.executeUpdate();
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return Optional.of(generatedKeys.getInt(1));
-                }
-            }
+            GenerateId generateId = new GenerateId();
+            return generateId.getGeneratedKeys(statement);
         }
-        return Optional.empty();
     }
 
     public Optional<TirPerf> findTirPerfById(int id) throws SQLException {

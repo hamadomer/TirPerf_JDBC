@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
+import org.example.Helpers.GenerateId;
 import org.example.model.Applicatif;
 import org.example.model.Scenario;
 
@@ -32,15 +33,10 @@ public class ScenarioRepository {
             statement.setString(1, scenario.getDescription());
             statement.setInt(2, scenario.getApplicatif_id());
             statement.setString(3, scenario.getScenario_fonctions());
-            statement.executeUpdate();
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return  Optional.of(generatedKeys.getInt(1));
-                }
-            }
+            GenerateId generateId = new GenerateId();
+            return generateId.getGeneratedKeys(statement);
         }
-        return Optional.empty();
     }
 
     public Optional<Scenario> findScenarioById (Integer id) throws SQLException {

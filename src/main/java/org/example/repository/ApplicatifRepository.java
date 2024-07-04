@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
+import org.example.Helpers.GenerateId;
 import org.example.model.Applicatif;
 
 import java.sql.*;
@@ -35,13 +36,9 @@ public class ApplicatifRepository {
             statement.setString(3, applicatif.getFonctions());
             statement.executeUpdate();
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return Optional.of(generatedKeys.getInt(1));
-                }
-            }
+            GenerateId generateId = new GenerateId();
+            return generateId.getGeneratedKeys(statement);
         }
-        return Optional.empty();
     }
 
     public Optional<Applicatif> findApplicatifById(Integer id) {
