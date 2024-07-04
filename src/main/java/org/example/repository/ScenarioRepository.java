@@ -1,8 +1,7 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.GenerateId;
-import org.example.model.Applicatif;
+import org.example.Helpers.HeplersFunctions;
 import org.example.model.Scenario;
 
 import java.sql.*;
@@ -34,7 +33,7 @@ public class ScenarioRepository {
             statement.setInt(2, scenario.getApplicatif_id());
             statement.setString(3, scenario.getScenario_fonctions());
 
-            GenerateId generateId = new GenerateId();
+            HeplersFunctions generateId = new HeplersFunctions();
             return generateId.getGeneratedKeys(statement);
         }
     }

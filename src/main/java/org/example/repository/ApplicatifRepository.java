@@ -1,7 +1,7 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.GenerateId;
+import org.example.Helpers.HeplersFunctions;
 import org.example.model.Applicatif;
 
 import java.sql.*;
@@ -36,7 +36,7 @@ public class ApplicatifRepository {
             statement.setString(3, applicatif.getFonctions());
             statement.executeUpdate();
 
-            GenerateId generateId = new GenerateId();
+            HeplersFunctions generateId = new HeplersFunctions();
             return generateId.getGeneratedKeys(statement);
         }
     }

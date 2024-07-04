@@ -1,7 +1,7 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.GenerateId;
+import org.example.Helpers.HeplersFunctions;
 import org.example.model.TirPerf;
 
 import java.sql.*;
@@ -31,7 +31,7 @@ public class TirPerfRepository {
             statement.setDate(1, tirPerf.getDate());
             statement.setInt(2, tirPerf.getScenarioId());
 
-            GenerateId generateId = new GenerateId();
+            HeplersFunctions generateId = new HeplersFunctions();
             return generateId.getGeneratedKeys(statement);
         }
     }

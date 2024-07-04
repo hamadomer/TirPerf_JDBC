@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class GenerateId {
+public class HeplersFunctions {
 
-    public GenerateId() {}
+    public HeplersFunctions() {}
 
     public Optional<Integer> getGeneratedKeys(PreparedStatement statement) throws SQLException {
         statement.executeUpdate();
