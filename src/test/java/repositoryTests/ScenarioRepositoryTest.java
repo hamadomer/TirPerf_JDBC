@@ -1,6 +1,5 @@
 package repositoryTests;
 
-import org.example.model.Applicatif;
 import org.example.model.Scenario;
 import org.example.repository.ScenarioRepository;
 import org.junit.jupiter.api.*;

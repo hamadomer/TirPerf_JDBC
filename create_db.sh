@@ -14,7 +14,7 @@ psql -U $DB_USER -h $DB_HOST -p $DB_PORT -c "CREATE DATABASE $DB_NAME;"
 
 # Create the applicatif table
 psql -U $DB_USER -h $DB_HOST -p $DB_PORT -d $DB_NAME -c "
-CREATE TABLE applicatif (
+CREATE TABLE IF NOT EXISTS applicatif (
     id SERIAL PRIMARY KEY,
     intitule VARCHAR(100),
     version VARCHAR(50),
@@ -23,13 +23,20 @@ CREATE TABLE applicatif (
 
 # Create the scenario table
 psql -U $DB_USER -h $DB_HOST -p $DB_PORT -d $DB_NAME -c "
-CREATE TABLE scenario (
+CREATE TABLE IF NOT EXISTS scenario (
     id SERIAL PRIMARY KEY,
     description VARCHAR(500),
     applicatif_id SMALLINT,
     scenario_fonctions VARCHAR(200)
     );"
+# Create the tirPerf table
 
+psql -U $DB_USER -h $DB_HOST -p $DB_PORT -d $DB_NAME -c "
+CREATE TABLE IF NOT EXISTS tirperf (
+    id SERIAL PRIMARY KEY,
+    tir_perf_date DATE,
+    scenario_id SMALLINT
+    );"
 
 unset PGPASSWORD
 
