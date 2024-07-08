@@ -1,18 +1,21 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
+import org.example.Helpers.FlywayExtension;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.TirPerf;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.*;
 import java.util.Optional;
+
 
 public class TirPerfRepository {
 
     private static final   TirPerfRepository instance = new TirPerfRepository();
     public static TirPerfRepository getInstance() { return instance; }
 
-    private static final String SQL_CREATE_TirPerf = "INSERT INTO tirperf (tir_perf_date, scenario_id) VALUES (?, ?)";
+    private static final String SQL_CREATE_TirPerf = "INSERT INTO tirperf (tirperf_date, scenario_id) VALUES (?, ?)";
     private static final String SQL_FIND_TirPerf_BY_ID = "SELECT * FROM tirperf WHERE id = ?";
 
     public Connection connection = null;
@@ -42,7 +45,7 @@ public class TirPerfRepository {
                 if (resultSet.next()) {
                     TirPerf tirPerf = new TirPerf();
                     tirPerf.setId(resultSet.getInt("id"));
-                    tirPerf.setDate(resultSet.getDate("tir_perf_date"));
+                    tirPerf.setDate(resultSet.getDate("tirperf_date"));
                     tirPerf.setScenarioId(resultSet.getInt("scenario_id"));
 
                     return Optional.of(tirPerf);

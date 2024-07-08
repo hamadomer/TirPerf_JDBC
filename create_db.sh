@@ -49,3 +49,13 @@ CREATE TABLE IF NOT EXISTS pansi (
 unset PGPASSWORD
 
 echo "Database '$DB_NAME' created successfully."
+
+
+CREATE TABLE contextexecution (
+    id SERIAL PRIMARY KEY,
+    pan_si_id INT,
+    env VARCHAR(255),
+    info_complementaire VARCHAR(255),
+    tir_perf_id INT,
+    FOREIGN KEY (tir_perf_id) REFERENCES tirperf(id) ON DELETE CASCADE
+);

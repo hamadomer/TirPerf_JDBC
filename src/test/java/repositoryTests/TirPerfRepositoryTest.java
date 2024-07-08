@@ -1,10 +1,12 @@
 package repositoryTests;
 
+import org.example.Helpers.FlywayExtension;
 import org.example.model.TirPerf;
 import org.example.repository.TirPerfRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -12,6 +14,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
+@ExtendWith(FlywayExtension.class)
 public class TirPerfRepositoryTest {
 
     private TirPerfRepository repository;
@@ -27,10 +31,10 @@ public class TirPerfRepositoryTest {
         tirPerf.setId(generatedId.orElseThrow(() -> new RuntimeException("Could not create TirPerf")));
     }
 
-    @AfterEach
-    public void tearDown() throws SQLException {
-        repository.connection.prepareStatement("DELETE FROM tirperf").execute();
-    }
+//    @AfterEach
+//    public void tearDown() throws SQLException {
+//        repository.connection.prepareStatement("DELETE FROM tirperf").execute();
+//    }
 
     @Test
     public void testCreateTirPerf() throws SQLException {

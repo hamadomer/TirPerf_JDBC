@@ -1,17 +1,21 @@
 package repositoryTests;
 
+import org.example.Helpers.FlywayExtension;
 import org.example.model.PanSI;
 import org.example.model.Scenario;
 import org.example.repository.PanSIRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@ExtendWith(FlywayExtension.class)
 public class PanSIRepositoryTests {
     private PanSIRepository repository;
     private PanSI panSI;
@@ -25,10 +29,10 @@ public class PanSIRepositoryTests {
 
     }
 
-    @AfterEach
-    public void tearDown() throws SQLException {
-        repository.connection.prepareStatement("DELETE FROM pansi").executeUpdate();
-    }
+//    @AfterEach
+//    public void tearDown() throws SQLException {
+//        repository.connection.prepareStatement("DELETE FROM pansi").executeUpdate();
+//    }
 
     @Test
     public void testCreatePanSI() throws SQLException {

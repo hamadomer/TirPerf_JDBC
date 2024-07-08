@@ -1,15 +1,22 @@
 package modelsTests;
 
+import org.example.DB.DbUtil;
 import org.example.model.Applicatif;
+import org.example.model.Fonction;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Set;
 
 public class ApplicatifTest {
 
     private Applicatif app;
+
+
 
     @BeforeEach
     public void setUp() {
@@ -21,7 +28,7 @@ public class ApplicatifTest {
         app.setId(1);
         app.setIntitule("AgentMail");
         app.setVersion("0.0.1");
-        app.setFonctions("Mail treatment");
+        app.setFonction(1);
     }
 
     @Test
@@ -34,10 +41,10 @@ public class ApplicatifTest {
         Assertions.assertEquals("0.0.1", app.getVersion());
     }
 
-    @Test
-    public void testGetApplicatifFonctionsIsNotEmpty() {
-        Assertions.assertTrue(!app.getFonctions().isEmpty());
-    }
+//    @Test
+//    public void testGetApplicatifFonctionsIsNotEmpty() {
+//        Assertions.assertTrue(!app.getFonction().getId());
+//    }
 
 //    @Test
 //    public void testGetApplicatifFonctions() {

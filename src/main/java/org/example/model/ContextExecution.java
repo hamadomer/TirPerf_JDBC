@@ -7,6 +7,13 @@ public class ContextExecution {
     private String infoComplementaire;
     private Integer tirPerfId;
 
+    public ContextExecution(Integer panSiId, String env, String infoComplementaire, Integer tirPerfId) {
+        this.panSiId = panSiId;
+        this.env = env;
+        this.infoComplementaire = infoComplementaire;
+        this.tirPerfId = tirPerfId;
+    }
+
     public ContextExecution(Integer id, Integer panSiId, String env, String infoComplementaire, Integer tirPerfId) {
         this.id = id;
         this.panSiId = panSiId;

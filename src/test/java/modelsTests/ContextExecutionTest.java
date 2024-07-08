@@ -1,13 +1,21 @@
 package modelsTests;
 
+import org.example.DB.DbUtil;
 import org.example.model.ContextExecution;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class ContextExecutionTest {
 
     ContextExecution contextExecution;
+
+    public static void inject() throws SQLException, IOException {
+        DbUtil.executeSqlScript("src/main/java/org/example/Helpers/SqlScripts/202408071117-create-db.sql");
+    }
 
     @BeforeEach
     public void setUp() {

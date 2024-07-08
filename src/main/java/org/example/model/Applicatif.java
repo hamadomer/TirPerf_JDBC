@@ -1,29 +1,20 @@
 package org.example.model;
 
+import org.example.model.Fonction;
 
 public class Applicatif {
-
     private Integer id;
-    private String intitule;
     private String version;
-    private String fonctions;
+    private String intitule;
+    private Integer fonction;
 
-    public Applicatif(Integer id, String version, String intitule, String fonctions) {
-        this.id = id;
+    public Applicatif(String version, String intitule, Integer fonction) {
         this.version = version;
         this.intitule = intitule;
-        this.fonctions = fonctions;
+        this.fonction = fonction;
     }
 
-    public Applicatif() {
-
-    }
-
-    public Applicatif (String intitule, String version, String fonctions) {
-        this.intitule = intitule;
-        this.version  = version;
-        this.fonctions = fonctions;
-    }
+    public Applicatif () {}
 
     public Integer getId() {
         return id;
@@ -49,11 +40,11 @@ public class Applicatif {
         this.intitule = intitule;
     }
 
-    public String getFonctions() {
-        return fonctions;
+    public Integer getFonction() {
+        return fonction;
     }
 
-    public void setFonctions(String fonctions) {
-       this.fonctions = fonctions;
+    public void setFonction(Integer fonction) {
+        this.fonction = fonction;
     }
 }

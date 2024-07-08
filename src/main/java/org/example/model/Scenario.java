@@ -11,19 +11,16 @@ public class Scenario {
 
     private Integer applicatif_id;
 
-    private String scenario_fonctions;
 
-    public Scenario(Integer id, String description, Integer applicatif_id, String scenario_fonctions) {
+    public Scenario(Integer id, String description, Integer applicatif_id) {
         this.id = id;
         this.description = description;
         this.applicatif_id = applicatif_id;
-        this.scenario_fonctions = scenario_fonctions;
     }
 
-    public Scenario (String description, Integer applicatif_id, String scenario_fonctions) {
+    public Scenario (String description, Integer applicatif_id) {
         this.description = description;
         this.applicatif_id = applicatif_id;
-        this.scenario_fonctions = scenario_fonctions;
     }
 
     public Scenario () {}
@@ -54,11 +51,4 @@ public class Scenario {
         this.applicatif_id = applicatif_id;
     }
 
-    public String getScenario_fonctions() {
-        return scenario_fonctions;
-    }
-
-    public void setScenario_fonctions(String fonction) {
-        this.scenario_fonctions = fonction;
-    }
 }

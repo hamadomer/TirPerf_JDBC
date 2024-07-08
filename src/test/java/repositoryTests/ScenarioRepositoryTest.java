@@ -1,14 +1,18 @@
 package repositoryTests;
 
+import org.example.Helpers.FlywayExtension;
 import org.example.model.Scenario;
 import org.example.repository.ScenarioRepository;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.SQLException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@ExtendWith(FlywayExtension.class)
 public class ScenarioRepositoryTest {
 
     private ScenarioRepository repository;
@@ -17,15 +21,15 @@ public class ScenarioRepositoryTest {
     @BeforeEach
     public void setUp() throws Exception {
         repository = ScenarioRepository.getInstance();
-        scenario = new Scenario("Some description", 1, "Some fonction");
+        scenario = new Scenario("Some description", 1);
         Optional<Integer> generatedId = repository.createScenario(scenario);
         scenario.setId(generatedId.orElseThrow(()-> new RuntimeException("Scenario could not be created")));
     }
 
-    @AfterEach
-    public void tearDown() throws SQLException {
-        repository.connection.prepareStatement("DELETE FROM scenario").executeUpdate();
-    }
+//    @AfterEach
+//    public void tearDown() throws SQLException {
+//        repository.connection.prepareStatement("DELETE FROM scenario").executeUpdate();
+//    }
 
     @Test
     public void testCreateScenario() throws SQLException {
@@ -33,7 +37,6 @@ public class ScenarioRepositoryTest {
         assertTrue(createdScenario.isPresent());
         assertEquals(scenario.getDescription(), createdScenario.get().getDescription());
         assertEquals(scenario.getApplicatif_id(), createdScenario.get().getApplicatif_id());
-        assertEquals(scenario.getScenario_fonctions(), createdScenario.get().getScenario_fonctions());
     }
 
     @Test
