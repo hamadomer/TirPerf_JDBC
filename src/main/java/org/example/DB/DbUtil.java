@@ -18,14 +18,11 @@ public class DbUtil {
             String line;
             while ((line = reader.readLine()) != null) {
                 sql.append(line);
-                // If the line ends with a semicolon, execute the statement
                 if (line.trim().endsWith(";")) {
                     statement.execute(sql.toString());
-                    sql = new StringBuilder();  // Reset for the next statement
+                    sql = new StringBuilder();
                 }
             }
-
-            // Execute any remaining SQL in the buffer (handles scripts without a final semicolon)
             if (sql.length() > 0) {
                 statement.execute(sql.toString());
             }

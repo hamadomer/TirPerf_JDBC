@@ -18,7 +18,10 @@ public class ApplicatifRepository {
     }
 
     private static final String SQL_CREATE_APPLICATIF = "INSERT INTO applicatif (intitule, version, fonction_id) VALUES (?, ?, ?)";
+    private static final String SQL_UPDATE_APPLICATIF_FONCTION = "UPDATE applicatif SET fonction_id = ? WHERE id = ?";
     private static final String SQL_FIND_APPLICATIF_BY_ID = "SELECT * FROM applicatif where id = ?";
+    private static final String SQL_DELETE_APPLICATIF = "DELETE FROM applicatif WHERE id = ?";
+
 
     public Connection connection = null;
 
@@ -38,6 +41,23 @@ public class ApplicatifRepository {
             statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
+        }
+    }
+
+    public int updateApplicatifFonction(int applicatif_id, int fonction_id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_APPLICATIF_FONCTION)){
+            statement.setInt(1, fonction_id);
+            statement.setInt(2, applicatif_id);
+            return statement.executeUpdate();
+        }
+    }
+
+    public int deleteApplicatif(int id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_APPLICATIF)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

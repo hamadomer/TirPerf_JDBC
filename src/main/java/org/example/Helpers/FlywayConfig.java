@@ -1,6 +1,6 @@
 package org.example.Helpers;
-
 import org.flywaydb.core.Flyway;
+
 
 public class FlywayConfig {
     private Flyway flyway;
