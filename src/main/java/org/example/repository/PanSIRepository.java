@@ -1,26 +1,29 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.FlywayExtension;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.PanSI;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.*;
 import java.util.Optional;
 
 
-
 public class PanSIRepository {
-    private static final PanSIRepository instance = new PanSIRepository();
-    public static PanSIRepository getInstance() { return instance; }
+    private static PanSIRepository instance = null;
 
-    private  static final String SQL_CREATE_PANSI = "INSERT INTO pansi (version) VALUES (?)";
-    private  static final String SQL_GET_PANSI_BY_ID = "SELECT * FROM pansi WHERE id = ?";
+    public static PanSIRepository getInstance() {
+        if (instance == null) {
+            instance = new PanSIRepository();
+        }
+        return instance;
+    }
+
+    private static final String SQL_CREATE_PANSI = "INSERT INTO pansi (version) VALUES (?)";
+    private static final String SQL_GET_PANSI_BY_ID = "SELECT * FROM pansi WHERE id = ?";
 
     public Connection connection = null;
 
-    private PanSIRepository () {
+    private PanSIRepository() {
         try {
             connection = DbConnector.getConnection();
         } catch (SQLException e) {

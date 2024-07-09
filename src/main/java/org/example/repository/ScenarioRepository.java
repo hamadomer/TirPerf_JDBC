@@ -12,8 +12,11 @@ import java.util.Optional;
 
 public class ScenarioRepository {
 
-    private static final ScenarioRepository instance = new ScenarioRepository();
+    private static ScenarioRepository instance = null;
     public static ScenarioRepository getInstance() {
+        if (instance == null) {
+            instance = new ScenarioRepository();
+        }
         return instance;
     }
     private static final String SQL_CREATE_SCENARIO = "INSERT INTO scenario (description, applicatif_id) VALUES (?, ?)";

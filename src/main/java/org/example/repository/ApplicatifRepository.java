@@ -11,9 +11,14 @@ import java.util.Optional;
 
 public class ApplicatifRepository {
 
-    private  static final ApplicatifRepository instance = new ApplicatifRepository();
+    private  static ApplicatifRepository instance = null;
 
+    // Note for future me :
+    // Refer to https://enos.itcollege.ee/~jpoial/java/naited/Java-Design-Patterns.pdf, page 32 for more info
     public static ApplicatifRepository getInstance() {
+        if (instance == null) {
+            instance = new ApplicatifRepository();
+        }
         return instance;
     }
 

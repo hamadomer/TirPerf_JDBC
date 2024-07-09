@@ -12,9 +12,12 @@ import java.util.Optional;
 
 public class AppPanSIRepository {
 
-    private static final AppPanSIRepository instance = new AppPanSIRepository();
+    private static AppPanSIRepository instance = null;
 
     public static AppPanSIRepository getInstance() {
+        if (instance == null) {
+            instance = new AppPanSIRepository();
+        }
         return instance;
     }
 

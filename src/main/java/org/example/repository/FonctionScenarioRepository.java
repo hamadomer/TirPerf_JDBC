@@ -12,9 +12,12 @@ import java.util.Optional;
 
 public class FonctionScenarioRepository {
 
-    private static final FonctionScenarioRepository instance = new FonctionScenarioRepository();
+    private static FonctionScenarioRepository instance = null;
 
     public static FonctionScenarioRepository getInstance() {
+        if (instance == null) {
+            instance = new FonctionScenarioRepository();
+        }
         return instance;
     }
 

@@ -12,8 +12,14 @@ import java.util.Optional;
 
 public class ContextExecutionRepository {
 
-    private static final ContextExecutionRepository instance = new ContextExecutionRepository();
-    public static ContextExecutionRepository getInstance() { return instance; }
+    private static ContextExecutionRepository instance = null;
+
+    public static ContextExecutionRepository getInstance() {
+        if (instance == null) {
+            instance = new ContextExecutionRepository();
+        }
+        return instance;
+    }
 
     private static final String SQL_CREATE_ContextExecution = "INSERT INTO contextexecution (pansi_id, env, infocomp, tirperf_id) VALUES (?, ?, ?, ?)";
     private static final String SQL_FIND_ContextExecution_BY_ID = "SELECT * FROM contextexecution WHERE id = ?";

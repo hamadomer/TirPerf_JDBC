@@ -14,9 +14,12 @@ import java.util.Optional;
 
 public class RapportExecutionRepository {
 
-    private static final RapportExecutionRepository instance = new RapportExecutionRepository();
+    private static RapportExecutionRepository instance = null;
 
     public static RapportExecutionRepository getInstance() {
+        if (instance == null) {
+            instance = new RapportExecutionRepository();
+        }
         return instance;
     }
 

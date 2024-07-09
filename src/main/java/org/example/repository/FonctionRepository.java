@@ -12,9 +12,12 @@ import java.util.Optional;
 
 public class FonctionRepository {
 
-    private static final FonctionRepository instance = new FonctionRepository();
+    private static FonctionRepository instance = null;
 
     public static FonctionRepository getInstance() {
+        if (instance == null) {
+            instance = new FonctionRepository();
+        }
         return instance;
     }
 

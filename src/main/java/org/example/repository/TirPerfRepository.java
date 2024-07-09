@@ -12,8 +12,14 @@ import java.util.Optional;
 
 public class TirPerfRepository {
 
-    private static final   TirPerfRepository instance = new TirPerfRepository();
-    public static TirPerfRepository getInstance() { return instance; }
+    private static TirPerfRepository instance = null;
+
+    public static TirPerfRepository getInstance() {
+        if (instance == null) {
+            instance = new TirPerfRepository();
+        }
+        return instance;
+    }
 
     private static final String SQL_CREATE_TirPerf = "INSERT INTO tirperf (tirperf_date, scenario_id) VALUES (?, ?)";
     private static final String SQL_FIND_TirPerf_BY_ID = "SELECT * FROM tirperf WHERE id = ?";
@@ -26,7 +32,6 @@ public class TirPerfRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public Optional<Integer> createTirPerf(TirPerf tirPerf) throws SQLException {
