@@ -10,18 +10,4 @@ This application is created to change this state of affairs. In its first releas
 
 - Java 22
 - Postgres 16.2 or higher
--  Create a database in your Postgres named "tirperf". Make sure your username and password are the default Postgres credentials, or you can use the Bash script `create_db.sh`.
-
-#### how to run `create_db.sh` :
-
-- Make sure the script is executable by running :
-```bash
-chmod +x create_db.sh
-```
-- Run the Script :
-```bash
-./create_db.sh
-```
-
-After this you can run the `DbConnectorTest`  to test the connection to Postgres.
-you can find the test on this path `src/test/java/DbTests/DbConnectorTest.java`, if every thing is green you can proceed to the rest of the tests .
+-  Create a database in your Postgres named "tirperf". Make sure your username and password are the default Postgres credentials.
