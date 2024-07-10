@@ -1,7 +1,7 @@
 package org.example.model;
 
 public class Fonction {
-    private int id;
+    private Integer id;
     private String name;
 
     public Fonction() {}
@@ -11,7 +11,7 @@ public class Fonction {
         this.name = name;
     }
 
-    public Fonction(int id) {
+    public Fonction(Integer id) {
         this.id = id;
     }
 
@@ -23,7 +23,7 @@ public class Fonction {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

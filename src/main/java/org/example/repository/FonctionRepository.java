@@ -22,7 +22,9 @@ public class FonctionRepository {
     }
 
     private static final String SQL_CREATE_FONCTION = "INSERT INTO fonction (name) VALUES (?)";
+    private static final String SQL_UPDATE_FONCTION = "UPDATE fonction SET name = ? WHERE id = ?";
     private static final String SQL_FIND_FONCTION_BY_ID = "SELECT * FROM fonction WHERE id = ?";
+    private static final String SQL_DELETE_FONCTION = "DELETE FROM fonction WHERE id = ?";
 
     public Connection connection = null;
 
@@ -40,6 +42,21 @@ public class FonctionRepository {
             statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
+        }
+    }
+
+    public int UpdateFonction(int id, String name) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_FONCTION)) {
+           statement.setString(1, name);
+           statement.setInt(2, id);
+           return statement.executeUpdate();
+        }
+    }
+
+    public int deleteFonction(int id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_FONCTION)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate();
         }
     }
 

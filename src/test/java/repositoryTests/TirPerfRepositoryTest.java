@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -30,11 +31,6 @@ public class TirPerfRepositoryTest {
         tirPerf.setId(generatedId.orElseThrow(() -> new RuntimeException("Could not create TirPerf")));
     }
 
-//    @AfterEach
-//    public void tearDown() throws SQLException {
-//        repository.connection.prepareStatement("DELETE FROM tirperf").execute();
-//    }
-
     @Test
     public void testCreateTirPerf() throws SQLException {
         Optional<TirPerf> createdTirPerf = repository.findTirPerfById(tirPerf.getId());
@@ -42,5 +38,24 @@ public class TirPerfRepositoryTest {
         assertEquals(tirPerf.getId(), createdTirPerf.get().getId());
         assertEquals(tirPerf.getDate().toLocalDate(), createdTirPerf.get().getDate().toLocalDate());
         assertEquals(tirPerf.getScenarioId(), createdTirPerf.get().getScenarioId());
+    }
+
+    @Test
+    public void testUpdateTirPerf() throws SQLException {
+        tirPerf.setDate(new Date(2012,12,04));
+        tirPerf.setScenarioId(3);
+        int rowsAffected = repository.UpdateTirPerf(tirPerf);
+        assertEquals(1, rowsAffected);
+        TirPerf updatedTirPerf = repository.findTirPerfById(tirPerf.getId()).orElseThrow(()-> new RuntimeException("Could not find TirPerf"));
+        assertEquals(tirPerf.getId(), updatedTirPerf.getId());
+        assertEquals(tirPerf.getDate().toLocalDate(), updatedTirPerf.getDate().toLocalDate());
+        assertEquals(3, updatedTirPerf.getScenarioId());
+    }
+
+    @Test
+    public void testDeleteTirPerf() throws SQLException {
+        int rowsAffected = repository.DeleteTirPerf(tirPerf.getId());
+        assertEquals(1, rowsAffected);
+        assertEquals(Optional.empty(), repository.findTirPerfById(tirPerf.getId()));
     }
 }

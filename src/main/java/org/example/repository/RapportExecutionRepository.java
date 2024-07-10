@@ -23,8 +23,10 @@ public class RapportExecutionRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_RAPPORT_EX = "INSERT INTO rapport_ex (nbAppel, tauxSuccesKo, erreurs, duration, TirPerf_id) VALUES (?, ?, ?, ?, ?)";
-    private static final String SQL_FIND_RAPPORT_EX_BY_ID = "SELECT * FROM rapport_ex WHERE id = ?";
+    private static final String SQL_CREATE_RAPPORT_EX = "INSERT INTO rapportexecution (callsnumber, successrate, errors, duration, tirperf_id) VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE_RAPPORT_EX = "UPDATE rapportexecution SET callsNumber = ?, successrate = ?, errors = ?, duration = ?, tirperf_id = ? WHERE id = ?";
+    private static final String SQL_FIND_RAPPORT_EX_BY_ID = "SELECT * FROM rapportexecution WHERE id = ?";
+    private static final String SQL_DELETE_RAPPORT_EX = "DELETE FROM rapportexecution WHERE id = ?";
 
     public Connection connection = null;
 
@@ -49,6 +51,25 @@ public class RapportExecutionRepository {
         }
     }
 
+    public int UpdateRapportEx(RapportExecution rapportEx) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_RAPPORT_EX)) {
+            statement.setInt(1, rapportEx.getCallsNumber());
+            statement.setInt(2, rapportEx.getSuccessRate());
+            statement.setString(3, rapportEx.getErrors());
+            statement.setInt(4, rapportEx.getDuration());
+            statement.setInt(5, rapportEx.getTirPerfId());
+            statement.setInt(6, rapportEx.getId());
+            return statement.executeUpdate();
+        }
+    }
+
+    public int DeleteRapportEx(int id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_RAPPORT_EX)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate();
+        }
+    }
+
     public Optional<RapportExecution> findRapportExById(Integer id) {
         try {
             PreparedStatement statement = connection.prepareStatement(SQL_FIND_RAPPORT_EX_BY_ID);
@@ -58,11 +79,11 @@ public class RapportExecutionRepository {
             if (resultSet.next()) {
                 RapportExecution rapportEx = new RapportExecution();
 
-                Integer callsNumber = resultSet.getInt("nbAppel");
-                Integer succesRate = resultSet.getInt("tauxSuccesKo");
-                String errors = resultSet.getString("erreurs");
+                Integer callsNumber = resultSet.getInt("callsNumber");
+                Integer succesRate = resultSet.getInt("successrate");
+                String errors = resultSet.getString("errors");
                 Integer duration = resultSet.getInt("duration");
-                Integer TirPerf_id = resultSet.getInt("TirPerf_id");
+                Integer TirPerf_id = resultSet.getInt("tirperf_id");
 
                 rapportEx.setCallsNumber(callsNumber);
                 rapportEx.setSuccessRate(succesRate);

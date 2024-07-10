@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.PrimitiveIterator;
+
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,11 +37,6 @@ public class ApplicatifRepositoryTest {
         fonction.setId(generatedAppId.orElseThrow(()-> new RuntimeException("Fonction could not be created")));
     }
 
-//    @AfterEach
-//    public void tearDown() throws SQLException {
-//        repository.connection.prepareStatement("DELETE FROM applicatif").executeUpdate();
-//    }
-
     @Test
     public void testCreateApplicatif() throws SQLException {
         Optional<Applicatif> createdApplicatif = repository.findApplicatifById(applicatif.getId());
@@ -61,11 +56,12 @@ public class ApplicatifRepositoryTest {
     public void testDeleteApplicatif() throws SQLException {
         int deletedRows = repository.deleteApplicatif(applicatif.getId());
         assertEquals(1, deletedRows);
+        assertEquals(Optional.empty(), repository.findApplicatifById(applicatif.getId()));
     }
 
     @Test
     public void testUpdateApplicatif() throws SQLException {
-     int rowsAffected = repository.updateApplicatifFonction(applicatif.getId(), fonction.getId());
-     assertEquals(1, rowsAffected);
+        int rowsAffected = repository.updateApplicatifFonction(applicatif.getId(), fonction.getId());
+        assertEquals(1, rowsAffected);
     }
 }

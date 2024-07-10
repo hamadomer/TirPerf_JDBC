@@ -29,11 +29,6 @@ public class ContextExecutionRepositoryTest {
         contextExecution.setId(generatedId.orElseThrow(() -> new RuntimeException("Could not create ContextExecution")));
     }
 
-//    @AfterEach
-//    public void tearDown() throws SQLException {
-//        repository.connection.prepareStatement("DELETE FROM contextexecution").execute();
-//    }
-
     @Test
     public void testCreateContextExecution() throws SQLException {
         Optional<ContextExecution> createdContextExecution = repository.findContextExecutionById(contextExecution.getId());

@@ -17,6 +17,16 @@ public class RapportExecution {
         this.tirPerfId = tirPerfId;
     }
 
+    public RapportExecution(Integer callsNumber, Integer successRate, String errors, Integer duration, Integer tirPerfId) {
+        this.callsNumber = callsNumber;
+        this.successRate = successRate;
+        this.errors = errors;
+        this.duration = duration;
+        this.tirPerfId = tirPerfId;
+    }
+
+
+
     public RapportExecution() {}
 
     public Integer getId() {

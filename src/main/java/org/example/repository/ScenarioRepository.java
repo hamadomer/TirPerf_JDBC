@@ -20,7 +20,10 @@ public class ScenarioRepository {
         return instance;
     }
     private static final String SQL_CREATE_SCENARIO = "INSERT INTO scenario (description, applicatif_id) VALUES (?, ?)";
+    private static final String SQL_UPDATE_SCENARIO = "UPDATE scenario SET description = ?, applicatif_id = ? WHERE id = ?";
     private static final String SQL_FIND_SCENARIO_BY_ID = "SELECT * FROM scenario WHERE id = ?";
+    private static final String SQL_DELETE_SCENARIO = "DELETE FROM scenario WHERE id = ?";
+
 
     public Connection connection = null;
 
@@ -39,6 +42,22 @@ public class ScenarioRepository {
             statement.setInt(2, scenario.getApplicatif_id());
 
             return HeplersFunctions.getGeneratedKeys(statement);
+        }
+    }
+
+    public int updateScenario(Scenario scenario) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_SCENARIO)) {
+            statement.setString(1, scenario.getDescription());
+            statement.setInt(2, scenario.getApplicatif_id());
+            statement.setInt(3, scenario.getId());
+            return statement.executeUpdate();
+        }
+    }
+
+    public int deleteScenario(int id) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_SCENARIO)) {
+            statement.setInt(1, id);
+            return statement.executeUpdate();
         }
     }
 

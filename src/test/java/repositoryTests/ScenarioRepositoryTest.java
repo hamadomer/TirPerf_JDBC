@@ -26,11 +26,6 @@ public class ScenarioRepositoryTest {
         scenario.setId(generatedId.orElseThrow(()-> new RuntimeException("Scenario could not be created")));
     }
 
-//    @AfterEach
-//    public void tearDown() throws SQLException {
-//        repository.connection.prepareStatement("DELETE FROM scenario").executeUpdate();
-//    }
-
     @Test
     public void testCreateScenario() throws SQLException {
         Optional<Scenario> createdScenario = repository.findScenarioById(scenario.getId());
@@ -40,8 +35,20 @@ public class ScenarioRepositoryTest {
     }
 
     @Test
-    public void testFindScenarioById_NotFound() throws SQLException {
-        Optional<Scenario> notFoundApplicatif = repository.findScenarioById(999);
-        assertFalse(notFoundApplicatif.isPresent());
+    public void testUpdateScenario() throws SQLException {
+        scenario.setDescription("Updated description");
+        scenario.setApplicatif_id(3);
+        int rowsAffected = repository.updateScenario(scenario);
+        assertEquals(rowsAffected, 1);
+        Scenario updatedScenario = repository.findScenarioById(scenario.getId()).orElseThrow(()-> new RuntimeException("Scenario could not be found"));
+        assertEquals("Updated description", updatedScenario.getDescription());
+        assertEquals(3, updatedScenario.getApplicatif_id());
+    }
+
+    @Test
+    public void testDeleteScenario() throws SQLException {
+        int rowsAffected = repository.deleteScenario(scenario.getId());
+        assertEquals(1, rowsAffected);
+        assertEquals(Optional.empty() ,repository.findScenarioById(scenario.getId()));
     }
 }
