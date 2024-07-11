@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class ApplicatifRepository {
 
-    private  static ApplicatifRepository instance = null;
+    private static ApplicatifRepository instance = null;
 
     // Note for future me :
     // Refer to https://enos.itcollege.ee/~jpoial/java/naited/Java-Design-Patterns.pdf, page 32 for more info
@@ -43,14 +43,13 @@ public class ApplicatifRepository {
             statement.setString(1, applicatif.getIntitule());
             statement.setString(2, applicatif.getVersion());
             statement.setInt(3, applicatif.getFonction());
-            statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
         }
     }
 
     public int updateApplicatifFonction(int applicatif_id, int fonction_id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_APPLICATIF_FONCTION)){
+        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_APPLICATIF_FONCTION)) {
             statement.setInt(1, fonction_id);
             statement.setInt(2, applicatif_id);
             return statement.executeUpdate();

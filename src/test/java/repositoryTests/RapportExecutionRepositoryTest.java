@@ -41,14 +41,14 @@ public class RapportExecutionRepositoryTest {
         rapportExecution.setCallsNumber(20);
         rapportExecution.setSuccessRate(40);
         rapportExecution.setErrors("12 errors");
-        rapportExecution.setTirPerfId(4);
+        rapportExecution.setTirPerfId(2);
         int rowsAffected = repository.UpdateRapportEx(rapportExecution);
         assertEquals(1, rowsAffected);
         RapportExecution updatedRapport = repository.findRapportExById(rapportExecution.getId()).orElseThrow(()-> new RuntimeException("could not find rapport execution"));
         assertEquals(20, updatedRapport.getCallsNumber());
         assertEquals(40, updatedRapport.getSuccessRate());
         assertEquals("12 errors", updatedRapport.getErrors());
-        assertEquals(4, updatedRapport.getTirPerfId());
+        assertEquals(2, updatedRapport.getTirPerfId());
     }
 
     @Test

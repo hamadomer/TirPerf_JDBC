@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS rapportexecution (
     duration int,
     tirperf_id int,
     PRIMARY KEY (id),
-    FOREIGN KEY (tirperf_id) REFERENCES tirperf (id) ON DEL
+    FOREIGN KEY (tirperf_id) REFERENCES tirperf (id) ON DELETE CASCADE
     );
 
 

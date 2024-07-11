@@ -38,7 +38,6 @@ public class FonctionScenarioRepository {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_FONCTION_SCENARIO, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, fonctionScenario.getFonction_id());
             statement.setInt(2, fonctionScenario.getScenario_id());
-            statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
         }

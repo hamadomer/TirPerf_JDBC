@@ -45,7 +45,6 @@ public class RapportExecutionRepository {
             statement.setString(3, rapportEx.getErrors());
             statement.setInt(4, rapportEx.getDuration());
             statement.setInt(5, rapportEx.getTirPerfId());
-            statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
         }

@@ -39,7 +39,6 @@ public class FonctionRepository {
     public Optional<Integer> createFonction(Fonction fonction) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_FONCTION, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, fonction.getName());
-            statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
         }

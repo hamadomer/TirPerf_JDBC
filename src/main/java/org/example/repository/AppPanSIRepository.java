@@ -39,7 +39,6 @@ public class AppPanSIRepository {
             statement.setInt(1, appPanSI.getPansiId());
             statement.setInt(2, appPanSI.getAppId());
             statement.setString(3, appPanSI.getAppVersion());
-            statement.executeUpdate();
 
             return HeplersFunctions.getGeneratedKeys(statement);
         }

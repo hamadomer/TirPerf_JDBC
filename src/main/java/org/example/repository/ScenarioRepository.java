@@ -67,10 +67,10 @@ public class ScenarioRepository {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-              Scenario scenario = new Scenario();
-              scenario.setDescription(resultSet.getString("description"));
-              scenario.setApplicatif_id(resultSet.getInt("applicatif_id"));
-              return Optional.of(scenario);
+                Scenario scenario = new Scenario();
+                scenario.setDescription(resultSet.getString("description"));
+                scenario.setApplicatif_id(resultSet.getInt("applicatif_id"));
+                return Optional.of(scenario);
             } else {
                 return Optional.empty();
             }
