@@ -21,17 +21,15 @@ public class AppPanSIRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_APP_PANSI = "INSERT INTO app_panSI (PanSI_id, app_id, app_version) VALUES (?, ?, ?)";
-    private static final String SQL_FIND_APP_PANSI_BY_ID = "SELECT * FROM app_panSI WHERE PanSI_id = ? AND app_id = ?";
 
-    public Connection connection = null;
+    public Connection connection;
 
     private AppPanSIRepository() {
             connection = DbConnector.getConnection();
     }
 
     public Optional<Integer> createAppPanSI(AppPanSI appPanSI) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_APP_PANSI, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO app_panSI (PanSI_id, app_id, app_version) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, appPanSI.getPansiId());
             statement.setInt(2, appPanSI.getAppId());
             statement.setString(3, appPanSI.getAppVersion());
@@ -42,7 +40,7 @@ public class AppPanSIRepository {
 
     public Optional<AppPanSI> findAppPanSIById(Integer PanSI_id, Integer app_id) {
         try {
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_APP_PANSI_BY_ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM app_panSI WHERE PanSI_id = ? AND app_id = ?");
             statement.setInt(1, PanSI_id);
             statement.setInt(2, app_id);
             ResultSet resultSet = statement.executeQuery();

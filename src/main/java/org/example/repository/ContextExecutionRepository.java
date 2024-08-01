@@ -1,10 +1,8 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.FlywayExtension;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.ContextExecution;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.*;
 import java.util.Optional;
@@ -21,17 +19,14 @@ public class ContextExecutionRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_ContextExecution = "INSERT INTO contextexecution (pansi_id, env, infocomp, tirperf_id) VALUES (?, ?, ?, ?)";
-    private static final String SQL_FIND_ContextExecution_BY_ID = "SELECT * FROM contextexecution WHERE id = ?";
-
-    public Connection connection = null;
+    public Connection connection;
 
     private ContextExecutionRepository() {
             connection = DbConnector.getConnection();
     }
 
     public Optional<Integer> createContextExecution(ContextExecution contextExecution) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_ContextExecution, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO contextexecution (pansi_id, env, infocomp, tirperf_id) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, contextExecution.getPanSiId());
             statement.setString(2, contextExecution.getEnv());
             statement.setString(3, contextExecution.getInfoComplementaire());
@@ -42,7 +37,7 @@ public class ContextExecutionRepository {
     }
 
     public Optional<ContextExecution> findContextExecutionById(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_ContextExecution_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM contextexecution WHERE id = ?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

@@ -1,10 +1,8 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.FlywayExtension;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.Fonction;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.*;
 import java.util.Optional;
@@ -21,10 +19,7 @@ public class FonctionRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_FONCTION = "INSERT INTO fonction (name) VALUES (?)";
-    private static final String SQL_UPDATE_FONCTION = "UPDATE fonction SET name = ? WHERE id = ?";
-    private static final String SQL_FIND_FONCTION_BY_ID = "SELECT * FROM fonction WHERE id = ?";
-    private static final String SQL_DELETE_FONCTION = "DELETE FROM fonction WHERE id = ?";
+
 
     public Connection connection = null;
 
@@ -33,7 +28,7 @@ public class FonctionRepository {
     }
 
     public Optional<Integer> createFonction(Fonction fonction) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_FONCTION, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO fonction (name) VALUES (?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, fonction.getName());
 
             return HeplersFunctions.getGeneratedKeys(statement);
@@ -41,7 +36,7 @@ public class FonctionRepository {
     }
 
     public int UpdateFonction(int id, String name) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_FONCTION)) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE fonction SET name = ? WHERE id = ?")) {
            statement.setString(1, name);
            statement.setInt(2, id);
            return statement.executeUpdate();
@@ -49,7 +44,7 @@ public class FonctionRepository {
     }
 
     public int deleteFonction(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_FONCTION)) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM fonction WHERE id = ?")) {
             statement.setInt(1, id);
             return statement.executeUpdate();
         }
@@ -57,7 +52,7 @@ public class FonctionRepository {
 
     public Optional<Fonction> findFonctionById(Integer id) {
         try {
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_FONCTION_BY_ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM fonction WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 

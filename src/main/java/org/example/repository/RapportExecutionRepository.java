@@ -1,13 +1,8 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-
-import org.example.Helpers.FlywayExtension;
 import org.example.Helpers.HeplersFunctions;
-
 import org.example.model.RapportExecution;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import java.sql.*;
 import java.util.Optional;
 
@@ -23,19 +18,15 @@ public class RapportExecutionRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_RAPPORT_EX = "INSERT INTO rapportexecution (callsnumber, successrate, errors, duration, tirperf_id) VALUES (?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE_RAPPORT_EX = "UPDATE rapportexecution SET callsNumber = ?, successrate = ?, errors = ?, duration = ?, tirperf_id = ? WHERE id = ?";
-    private static final String SQL_FIND_RAPPORT_EX_BY_ID = "SELECT * FROM rapportexecution WHERE id = ?";
-    private static final String SQL_DELETE_RAPPORT_EX = "DELETE FROM rapportexecution WHERE id = ?";
 
-    public Connection connection = null;
+    public Connection connection;
 
     private RapportExecutionRepository() {
             connection = DbConnector.getConnection();
     }
 
     public Optional<Integer> createRapportEx(RapportExecution rapportEx) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_RAPPORT_EX, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO rapportexecution (callsnumber, successrate, errors, duration, tirperf_id) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, rapportEx.getCallsNumber());
             statement.setInt(2, rapportEx.getSuccessRate());
             statement.setString(3, rapportEx.getErrors());
@@ -47,7 +38,7 @@ public class RapportExecutionRepository {
     }
 
     public int UpdateRapportEx(RapportExecution rapportEx) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_RAPPORT_EX)) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE rapportexecution SET callsNumber = ?, successrate = ?, errors = ?, duration = ?, tirperf_id = ? WHERE id = ?")) {
             statement.setInt(1, rapportEx.getCallsNumber());
             statement.setInt(2, rapportEx.getSuccessRate());
             statement.setString(3, rapportEx.getErrors());
@@ -59,7 +50,7 @@ public class RapportExecutionRepository {
     }
 
     public int DeleteRapportEx(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_RAPPORT_EX)) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM rapportexecution WHERE id = ?")) {
             statement.setInt(1, id);
             return statement.executeUpdate();
         }
@@ -67,7 +58,7 @@ public class RapportExecutionRepository {
 
     public Optional<RapportExecution> findRapportExById(Integer id) {
         try {
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_RAPPORT_EX_BY_ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM rapportexecution WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 

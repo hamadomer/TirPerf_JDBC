@@ -1,10 +1,9 @@
 package org.example.repository;
 
 import org.example.DB.DbConnector;
-import org.example.Helpers.FlywayExtension;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.Scenario;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 
 import java.sql.*;
 import java.util.Optional;
@@ -19,13 +18,9 @@ public class ScenarioRepository {
         }
         return instance;
     }
-    private static final String SQL_CREATE_SCENARIO = "INSERT INTO scenario (description, applicatif_id) VALUES (?, ?)";
-    private static final String SQL_UPDATE_SCENARIO = "UPDATE scenario SET description = ?, applicatif_id = ? WHERE id = ?";
-    private static final String SQL_FIND_SCENARIO_BY_ID = "SELECT * FROM scenario WHERE id = ?";
-    private static final String SQL_DELETE_SCENARIO = "DELETE FROM scenario WHERE id = ?";
 
 
-    public Connection connection = null;
+    public Connection connection;
 
     public ScenarioRepository () {
             connection = DbConnector.getConnection();
@@ -33,7 +28,7 @@ public class ScenarioRepository {
 
 
     public Optional<Integer> createScenario(Scenario scenario) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_SCENARIO, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO scenario (description, applicatif_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, scenario.getDescription());
             statement.setInt(2, scenario.getApplicatif_id());
 
@@ -42,7 +37,7 @@ public class ScenarioRepository {
     }
 
     public int updateScenario(Scenario scenario) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_SCENARIO)) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE scenario SET description = ?, applicatif_id = ? WHERE id = ?")) {
             statement.setString(1, scenario.getDescription());
             statement.setInt(2, scenario.getApplicatif_id());
             statement.setInt(3, scenario.getId());
@@ -51,7 +46,7 @@ public class ScenarioRepository {
     }
 
     public int deleteScenario(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_SCENARIO)) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM scenario WHERE id = ?")) {
             statement.setInt(1, id);
             return statement.executeUpdate();
         }
@@ -59,7 +54,7 @@ public class ScenarioRepository {
 
     public Optional<Scenario> findScenarioById (Integer id) throws SQLException {
         try {
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_SCENARIO_BY_ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM scenario WHERE id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

@@ -18,19 +18,14 @@ public class TirPerfRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_TirPerf = "INSERT INTO tirperf (tirperf_date, scenario_id) VALUES (?, ?)";
-    private static final String SQL_UPDATE_TirPerf = "UPDATE tirperf SET tirperf_date = ?, scenario_id = ? WHERE id = ?";
-    private static final String SQL_FIND_TirPerf_BY_ID = "SELECT * FROM tirperf WHERE id = ?";
-    private static final String SQL_DELETE_TirPerf = "DELETE FROM tirperf WHERE id = ?";
-
-    public Connection connection = null;
+    public Connection connection;
 
     private TirPerfRepository() {
             connection = DbConnector.getConnection();
     }
 
     public Optional<Integer> createTirPerf(TirPerf tirPerf) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_TirPerf, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO tirperf (tirperf_date, scenario_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, tirPerf.getDate());
             statement.setInt(2, tirPerf.getScenarioId());
 
@@ -39,7 +34,7 @@ public class TirPerfRepository {
     }
 
     public int UpdateTirPerf(TirPerf tirPerf) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_TirPerf)) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE tirperf SET tirperf_date = ?, scenario_id = ? WHERE id = ?")) {
             statement.setDate(1, tirPerf.getDate());
             statement.setInt(2, tirPerf.getScenarioId());
             statement.setInt(3, tirPerf.getId());
@@ -48,14 +43,14 @@ public class TirPerfRepository {
     }
 
     public int DeleteTirPerf(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_TirPerf)) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM tirperf WHERE id = ?")) {
             statement.setInt(1, id);
             return statement.executeUpdate();
         }
     }
 
     public Optional<TirPerf> findTirPerfById(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_FIND_TirPerf_BY_ID)) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM tirperf WHERE id = ?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
