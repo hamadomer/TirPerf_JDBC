@@ -63,5 +63,8 @@ public class ApplicatifRepositoryTest {
     public void testUpdateApplicatif() throws SQLException {
         int rowsAffected = repository.updateApplicatifFonction(applicatif.getId(), fonction.getId());
         assertEquals(1, rowsAffected);
+        Optional<Applicatif> updatedApplicatif = repository.findApplicatifById(applicatif.getId());
+        assertTrue(updatedApplicatif.isPresent());
+        assertEquals(updatedApplicatif.get().getFonction(), fonction.getId());
     }
 }

@@ -27,11 +27,7 @@ public class ContextExecutionRepository {
     public Connection connection = null;
 
     private ContextExecutionRepository() {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Optional<Integer> createContextExecution(ContextExecution contextExecution) throws SQLException {

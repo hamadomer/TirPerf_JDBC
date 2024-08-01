@@ -27,11 +27,7 @@ public class AppPanSIRepository {
     public Connection connection = null;
 
     private AppPanSIRepository() {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Optional<Integer> createAppPanSI(AppPanSI appPanSI) throws SQLException {

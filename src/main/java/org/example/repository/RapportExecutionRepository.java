@@ -31,11 +31,7 @@ public class RapportExecutionRepository {
     public Connection connection = null;
 
     private RapportExecutionRepository() {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Optional<Integer> createRapportEx(RapportExecution rapportEx) throws SQLException {

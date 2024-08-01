@@ -10,13 +10,15 @@ public class DbConnector {
     private static final String JDBC_USERNAME = Optional.ofNullable(System.getenv("JDBC_USERNAME")).orElse("postgres");
     private static final String JDBC_PASSWORD = Optional.ofNullable(System.getenv("JDBC_PASSWORD")).orElse("postgres");
 
-    private static Connection connection = null;
+    private static Connection connection;
 
-    public static Connection getConnection() throws SQLException {
-        if (connection == null) {
-            DbConnector.connection = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
-        }
-        return connection;
+    public static Connection getConnection(){
+            try {
+                DbConnector.connection = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+           return connection;
     }
 
     private DbConnector(){}

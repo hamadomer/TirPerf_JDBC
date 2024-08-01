@@ -28,11 +28,7 @@ public class ScenarioRepository {
     public Connection connection = null;
 
     public ScenarioRepository () {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 

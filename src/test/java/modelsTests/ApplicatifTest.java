@@ -40,15 +40,4 @@ public class ApplicatifTest {
     public void testGetApplicatifVersion() {
         Assertions.assertEquals("0.0.1", app.getVersion());
     }
-
-//    @Test
-//    public void testGetApplicatifFonctionsIsNotEmpty() {
-//        Assertions.assertTrue(!app.getFonction().getId());
-//    }
-
-//    @Test
-//    public void testGetApplicatifFonctions() {
-//        Set<Fonction> fonctions = app.getFonctions();
-//        Assertions.assertTrue(fonctions.contains(new Fonction("Mail treatment")));
-//    }
 }

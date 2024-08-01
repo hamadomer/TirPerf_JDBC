@@ -3,7 +3,7 @@ package org.example.repository;
 import org.example.DB.DbConnector;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.Applicatif;
-import org.example.model.Fonction;
+
 
 import java.sql.*;
 import java.util.Optional;
@@ -22,24 +22,15 @@ public class ApplicatifRepository {
         return instance;
     }
 
-    private static final String SQL_CREATE_APPLICATIF = "INSERT INTO applicatif (intitule, version, fonction_id) VALUES (?, ?, ?)";
-    private static final String SQL_UPDATE_APPLICATIF_FONCTION = "UPDATE applicatif SET fonction_id = ? WHERE id = ?";
-    private static final String SQL_FIND_APPLICATIF_BY_ID = "SELECT * FROM applicatif where id = ?";
-    private static final String SQL_DELETE_APPLICATIF = "DELETE FROM applicatif WHERE id = ?";
 
-
-    public Connection connection = null;
+    public Connection connection;
 
     private ApplicatifRepository() {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Optional<Integer> createApplicatif(Applicatif applicatif) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_CREATE_APPLICATIF, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO applicatif (intitule, version, fonction_id) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, applicatif.getIntitule());
             statement.setString(2, applicatif.getVersion());
             statement.setInt(3, applicatif.getFonction());
@@ -49,26 +40,27 @@ public class ApplicatifRepository {
     }
 
     public int updateApplicatifFonction(int applicatif_id, int fonction_id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_APPLICATIF_FONCTION)) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE applicatif SET fonction_id = ? WHERE id = ?")) {
             statement.setInt(1, fonction_id);
             statement.setInt(2, applicatif_id);
             return statement.executeUpdate();
         }
     }
 
-    public int deleteApplicatif(int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_APPLICATIF)) {
+    public int deleteApplicatif(int id) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM applicatif WHERE id = ?")) {
             statement.setInt(1, id);
             return statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return -1;
     }
 
     public Optional<Applicatif> findApplicatifById(Integer id) {
         try {
 
-            PreparedStatement statement = connection.prepareStatement(SQL_FIND_APPLICATIF_BY_ID);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM applicatif where id = ?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 

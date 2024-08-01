@@ -31,7 +31,7 @@ public class DbConnectorTest {
     }
 
     @Test
-    public void testGetConnection() throws SQLException, IOException {
+    public void testGetConnection() throws SQLException {
 
         Connection connection = DbConnector.getConnection();
         assertNotNull(connection);

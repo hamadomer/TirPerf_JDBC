@@ -26,11 +26,7 @@ public class TirPerfRepository {
     public Connection connection = null;
 
     private TirPerfRepository() {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Optional<Integer> createTirPerf(TirPerf tirPerf) throws SQLException {

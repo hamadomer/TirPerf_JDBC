@@ -27,11 +27,7 @@ public class FonctionScenarioRepository {
     public Connection connection = null;
 
     private FonctionScenarioRepository() {
-        try {
             connection = DbConnector.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public Optional<Integer> createFonctionScenario(FonctionScenario fonctionScenario) throws SQLException {
