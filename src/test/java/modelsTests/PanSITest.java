@@ -13,17 +13,11 @@ public class PanSITest {
     public void setUp() {
         panSI = new PanSI();
 
-        panSI.setId(1);
-        panSI.setVersion("0.0.1");
+        panSI.setId(16);
     }
 
     @Test
     public void testGetPanSIId() {
-        Assertions.assertEquals(1, panSI.getId());
-    }
-
-    @Test
-    public void testGetPanSIVersion() {
-        Assertions.assertEquals("0.0.1", panSI.getVersion());
+        Assertions.assertEquals(16, panSI.getId());
     }
 }

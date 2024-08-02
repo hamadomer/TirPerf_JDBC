@@ -4,18 +4,19 @@ package repositoryTests;
 import org.example.Helpers.FlywayExtension;
 import org.example.model.Applicatif;
 import org.example.model.Fonction;
+import org.example.model.Scenario;
 import org.example.repository.ApplicatifRepository;
 import org.example.repository.FonctionRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(FlywayExtension.class)
 public class ApplicatifRepositoryTest {
 
@@ -66,5 +67,11 @@ public class ApplicatifRepositoryTest {
         Optional<Applicatif> updatedApplicatif = repository.findApplicatifById(applicatif.getId());
         assertTrue(updatedApplicatif.isPresent());
         assertEquals(updatedApplicatif.get().getFonction(), fonction.getId());
+    }
+
+    @Test
+    public void testFindAllScenarios() throws SQLException{
+            List<Scenario> scenario = repository.findAllScenarios(1);
+            assertTrue(!scenario.isEmpty());
     }
 }

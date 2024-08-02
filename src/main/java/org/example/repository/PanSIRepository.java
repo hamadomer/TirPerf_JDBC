@@ -26,10 +26,15 @@ public class PanSIRepository {
     }
 
     public Optional<Integer> createPanSI(PanSI panSI) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO pansi (version) VALUES (?)", Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, panSI.getVersion());
-
-            return HeplersFunctions.getGeneratedKeys(statement);
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO pansi DEFAULT VALUES RETURNING id", Statement.RETURN_GENERATED_KEYS)) {
+            statement.executeUpdate();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return Optional.of(generatedKeys.getInt(1));
+                } else {
+                    return Optional.empty();
+                }
+            }
         }
     }
 
@@ -40,13 +45,18 @@ public class PanSIRepository {
                 if (resultSet.next()) {
                     PanSI panSI = new PanSI();
                     panSI.setId(id);
-                    panSI.setVersion(resultSet.getString("version"));
 
                     return Optional.of(panSI);
                 } else {
                     return Optional.empty();
                 }
             }
+        }
+    }
+
+    public void deleteAllPansi() throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM pansi")) {
+            statement.executeUpdate();
         }
     }
 

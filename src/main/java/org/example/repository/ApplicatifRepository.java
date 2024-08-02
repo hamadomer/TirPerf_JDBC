@@ -3,9 +3,12 @@ package org.example.repository;
 import org.example.DB.DbConnector;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.Applicatif;
+import org.example.model.Scenario;
 
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -82,6 +85,28 @@ public class ApplicatifRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return Optional.empty();
+        }
+    }
+
+    public List<Scenario> findAllScenarios(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Scenario where applicatif_id = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<Scenario> scenarios = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Scenario scenario = new Scenario();
+                scenario.setId(resultSet.getInt("id"));
+                scenario.setDescription(resultSet.getString("description"));
+                scenario.setApplicatif_id(resultSet.getInt("applicatif_id"));
+                scenarios.add(scenario);
+            }
+
+            return scenarios;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

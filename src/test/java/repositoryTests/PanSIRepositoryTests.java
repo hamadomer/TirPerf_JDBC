@@ -23,23 +23,17 @@ public class PanSIRepositoryTests {
     @BeforeEach
     public void setUp() throws SQLException {
         repository = PanSIRepository.getInstance();
-        panSI = new PanSI("version");
+//        repository.deleteAllPansi();
+        panSI = new PanSI();
         Optional<Integer> generatedId = repository.createPanSI(panSI);
         panSI.setId(generatedId.orElseThrow(()-> new RuntimeException("PanSI id not created")));
-
     }
-
-//    @AfterEach
-//    public void tearDown() throws SQLException {
-//        repository.connection.prepareStatement("DELETE FROM pansi").executeUpdate();
-//    }
 
     @Test
     public void testCreatePanSI() throws SQLException {
         Optional<PanSI> createdPanSI = repository.findPanSIById(panSI.getId());
         assertTrue(createdPanSI.isPresent());
         assertEquals(panSI.getId(), createdPanSI.get().getId());
-        assertEquals(panSI.getVersion(), createdPanSI.get().getVersion());
     }
 
     @Test

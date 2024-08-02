@@ -2,15 +2,11 @@ package org.example.model;
 
 public class PanSI {
     private Integer id;
-    private String version;
 
-    public PanSI(Integer id, String version) {
+
+    public PanSI(Integer id) {
         this.id = id;
-        this.version = version;
-    }
 
-    public PanSI(String version) {
-        this.version = version;
     }
 
     public PanSI() {}
@@ -23,11 +19,4 @@ public class PanSI {
         this.id = id;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
 }
