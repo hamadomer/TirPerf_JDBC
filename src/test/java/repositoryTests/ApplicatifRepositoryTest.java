@@ -2,9 +2,7 @@ package repositoryTests;
 
 
 import org.example.Helpers.FlywayExtension;
-import org.example.model.Applicatif;
-import org.example.model.Fonction;
-import org.example.model.Scenario;
+import org.example.model.*;
 import org.example.repository.ApplicatifRepository;
 import org.example.repository.FonctionRepository;
 import org.junit.jupiter.api.*;
@@ -73,5 +71,17 @@ public class ApplicatifRepositoryTest {
     public void testFindAllScenarios() throws SQLException{
             List<Scenario> scenario = repository.findAllScenarios(1);
             assertTrue(!scenario.isEmpty());
+    }
+
+    @Test
+    public void testGetAllTirPerf() throws SQLException{
+        List<TirPerf> tirPerfs = repository.getAllTirPerfs(1);
+        assertTrue(!tirPerfs.isEmpty());
+    }
+
+    @Test
+    public void testGetAllRapportExcution() throws SQLException{
+        List<RapportExecution> rapportExecutions = repository.getAllRapportExection(2);
+        assertTrue(!rapportExecutions.isEmpty());
     }
 }

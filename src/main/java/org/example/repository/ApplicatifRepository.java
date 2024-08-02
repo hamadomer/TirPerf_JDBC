@@ -3,7 +3,9 @@ package org.example.repository;
 import org.example.DB.DbConnector;
 import org.example.Helpers.HeplersFunctions;
 import org.example.model.Applicatif;
+import org.example.model.RapportExecution;
 import org.example.model.Scenario;
+import org.example.model.TirPerf;
 
 
 import java.sql.*;
@@ -104,6 +106,57 @@ public class ApplicatifRepository {
             }
 
             return scenarios;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<TirPerf> getAllTirPerfs(int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT t.*\n" +
+                    "FROM tirperf t\n" +
+                    "JOIN scenario s ON t.scenario_id = s.id\n" +
+                    "WHERE s.applicatif_id = ?;");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<TirPerf> tirPerfs = new ArrayList<>();
+            while (resultSet.next()) {
+                TirPerf tirPerf = new TirPerf();
+                tirPerf.setId(resultSet.getInt("id"));
+                tirPerf.setDate(resultSet.getDate("tirperf_date"));
+                tirPerf.setScenarioId(resultSet.getInt("scenario_id"));
+                tirPerfs.add(tirPerf);
+            }
+            return tirPerfs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<RapportExecution> getAllRapportExection (int id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT r.*\n" +
+                    "FROM rapportexecution r\n" +
+                    "JOIN tirperf t ON r.tirperf_id = t.id\n" +
+                    "JOIN scenario s ON t.scenario_id = s.id\n" +
+                    "WHERE s.applicatif_id = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<RapportExecution> rapportExecutions = new ArrayList<>();
+
+            while (resultSet.next()) {
+                RapportExecution rapportExecution = new RapportExecution();
+                rapportExecution.setId(resultSet.getInt("id"));
+                rapportExecution.setDuration(resultSet.getInt("duration"));
+                rapportExecution.setCallsNumber(resultSet.getInt("callsnumber"));
+                rapportExecution.setSuccessRate(resultSet.getInt("successrate"));
+                rapportExecution.setErrors(resultSet.getString("errors"));
+                rapportExecution.setTirPerfId(resultSet.getInt("tirperf_id"));
+                rapportExecutions.add(rapportExecution);
+            }
+            return rapportExecutions;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

@@ -2,8 +2,11 @@ package org.example.repository;
 
 import org.example.DB.DbConnector;
 import org.example.Helpers.HeplersFunctions;
+import org.example.model.ContextExecution;
 import org.example.model.TirPerf;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -64,6 +67,31 @@ public class TirPerfRepository {
                     return Optional.empty();
                 }
             }
+        }
+    }
+
+    public List<ContextExecution> getAllContextExecutions(int id) throws SQLException {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT c.*\n" +
+                    "FROM contextexecution c\n" +
+                    "WHERE c.tirperf_id = ?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            List<ContextExecution> contextExecutions = new ArrayList<>();
+
+            while (resultSet.next()) {
+                ContextExecution contextExecution = new ContextExecution();
+                contextExecution.setId(resultSet.getInt("id"));
+                contextExecution.setTirPerfId(resultSet.getInt("tirperf_id"));
+                contextExecution.setEnv(resultSet.getString("env"));
+                contextExecution.setPanSiId(resultSet.getInt("pan_si_id"));
+                contextExecution.setInfoComplementaire(resultSet.getString("info_complementaire"));
+                contextExecutions.add(contextExecution);
+            }
+            return contextExecutions;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
